@@ -4,7 +4,7 @@ Predicting the presence of heart disease from patient health data, using a class
 
 ## Problem Statement
 
-Given medical attributes about a patient, can we predict whether they have heart disease? This is a **binary classification** problem — the target column indicates presence (1) or absence (0) of heart disease.
+Given a patient's medical attributes, can we predict whether they have heart disease? This is a **binary classification** problem — the target column indicates presence (1) or absence (0) of heart disease.
 
 **Evaluation goal:** reach 90% accuracy as a proof-of-concept threshold to justify further investment in the project.
 
@@ -48,10 +48,10 @@ The evaluation goal set at the start of this project (see Problem Definition) wa
 
 - **A single test row is worth ~1.6% of the accuracy score.** With only 61 test patients, hitting exactly 90% vs. 89% comes down to one prediction. Treating that 1% gap as a meaningful failure would be over-reading noise in a small sample — a slightly different train/test split could just as easily have landed above the threshold.
 - **The stronger signal is recall on Class 1 (0.91).** For a health-screening problem, correctly catching actual disease cases matters more than raw accuracy, since a false negative (missing a real case) is costlier than a false positive. The model's best number is exactly on the metric that matters most for this use case.
-- **Tuning converged, not stalled.** `RandomizedSearchCV` and `GridSearchCV` both landed on essentially the same performance as the baseline, which is evidence the model reached a genuine ceiling for this feature set and dataset size — not that the tuning process was incomplete or misconfigured.
-- **The 90% threshold was a proof-of-concept gate, not a hard requirement.** Its purpose was to test whether the medical attributes carry enough signal to justify further investment in the project — and 89% with strong, balanced precision/recall across both classes clearly demonstrates that they do.
+- **Tuning converged, not stalled.** `RandomizedSearchCV` and `GridSearchCV` both landed on essentially the same performance as the baseline, which is evidence that the model reached a genuine ceiling for this feature set and dataset size — not that the tuning process was incomplete or misconfigured.
+- **The 90% threshold was a proof-of-concept gate, not a hard requirement.** Its purpose was to test whether the medical attributes carry enough signal to justify further investment in the project, and 89% with strong, balanced precision/recall across both classes clearly demonstrates that they do.
 
-Consistent, balanced performance across both classes (rather than one strong class propping up the average) combined with strong recall on the more consequential class makes a solid case that the model is fit for its purpose as a proof-of-concept, even one point under the original target.
+Consistent, balanced performance across both classes (rather than one strong class propping up the average), combined with strong recall on the more consequential class, makes a solid case that the model is fit for its purpose as a proof-of-concept, even one point under the original target.
 
 **Feature importance** was assessed via logistic regression coefficients (`.coef_`) on scaled features. The strongest predictors were `sex` (coefficient ≈ -0.89), `cp` — chest pain type (≈ +0.67), and `exang` — exercise-induced angina (≈ -0.63), with `restecg` (≈ +0.33) as a secondary contributor. Features like `age`, `chol`, and `trestbps` had near-zero coefficients, suggesting limited standalone linear influence once the stronger features are accounted for.
 
@@ -92,9 +92,5 @@ jupyter notebook
 - Python
 - pandas, NumPy
 - scikit-learn (classification models)
-- Matplotlib / Seaborn (visualization)
+- Matplotlib / Seaborn (visualisation)
 - Jupyter Notebook
-
-## Notes
-
-This project was built as a self-practice exercise to strengthen end-to-end classification workflow skills — problem framing, EDA, preprocessing, baseline modelling, tuning, and evaluation — without following a guided tutorial step-by-step.
